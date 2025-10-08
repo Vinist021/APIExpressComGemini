@@ -74,6 +74,15 @@ router.post("/summarize", upload.single("file"), async (req, resp) => {
         {
             rule: "human", content: `Aqui está o contexto mais relevante extraído do PDF:\n\n{context}. Extraia um JSON com: 'projeto, materiais, custo estimado'`
         },
-        
+
     ]);
+
+    const chain = prompt.pipe(model);
+    const response = await chain.invoke({
+        context,
+    });
+
+    console.log(response.content.trim());
+    
+    resp.status(200).send();
 });
